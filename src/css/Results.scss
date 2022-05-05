@@ -1,0 +1,42 @@
+.resultsContainer {
+  padding: 1rem;
+  .gallery {
+    column-count: 2;
+    column-gap: 10px;
+    img {
+      width: 100% !important;
+      height: auto !important;
+      margin-bottom: 5px;
+      cursor: pointer;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .resultsContainer {
+    width: 750px;
+    margin: auto;
+
+    .gallery {
+      column-count: 3;
+      column-gap: 15px;
+      img {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .resultsContainer {
+    .gallery {
+      column-count: 4;
+    }
+  }
+}
+@media (min-width: 1400px) {
+  .resultsContainer {
+    width: 1200px;
+    margin: auto;
+  }
+}

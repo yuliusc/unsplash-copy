@@ -1,0 +1,50 @@
+.homePage {
+  background-image: url("../assets/img/michael-lammli-H37Wx7-ovHQ-unsplash.jpg");
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  padding: 20px;
+  box-sizing: border-box;
+
+  .title,
+  .description {
+    color: white;
+  }
+
+  .description {
+    font-size: clamp(0.7rem, 2vw, 1rem);
+  }
+
+  .title {
+    margin: 0;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+  }
+  .container {
+    text-align: left;
+    margin: auto;
+    display: flex;
+
+    flex-direction: column;
+    align-items: stretch;
+
+    .search {
+      width: 100%;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .homePage {
+    .container {
+      width: 50vw;
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .homePage {
+    .container {
+      width: 30vw;
+    }
+  }
+}
