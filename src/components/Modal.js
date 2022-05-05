@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
 import { useEffect } from "react";
 
-import "../css/Modal.css";
+import "../assets/css/Modal.css";
 
 import usersvg from "../assets/icons/user.svg";
 import locationsvg from "../assets/icons/location.svg";

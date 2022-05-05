@@ -1,8 +1,8 @@
 import SearchBar from "../components/SearchBar";
 
-import "../css/Home.css";
+import "../assets/css/Home.css";
 
-const Home = (props) => {
+const Home = () => {
   return (
     <div className="homePage">
       <div className="container">

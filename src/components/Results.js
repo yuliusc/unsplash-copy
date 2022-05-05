@@ -5,7 +5,7 @@ import axios from "axios";
 import SearchBar from "./SearchBar";
 import Modal from "./Modal";
 
-import "../css/Results.css";
+import "../assets/css/Results.css";
 
 const Results = () => {
   const [images, setImages] = useState(null);

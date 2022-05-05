@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import "../css/searchBar.css";
+import "../assets/css/searchBar.css";
 
 import serachsvg from "../assets/icons/search.svg";
 import closesvg from "../assets/icons/close.svg";
 
-const SearchBar = (props) => {
+const SearchBar = () => {
   const [input, setInput] = useState("");
   const [autocomplete, setAutocomplete] = useState([]);
   const [displayResults, setDisplayResults] = useState(false);
@@ -19,14 +19,12 @@ const SearchBar = (props) => {
   };
 
   const fetchPhotosHandlerSugg = (e) => {
-    // fetchPhotos(e.target.textContent);
     navigate(`/photos/${e.target.textContent.replace(" ", "_")}`);
     setInput("");
   };
 
   const fetchPhotosHandler = (e) => {
     if (input.trim(" ").length > 0) {
-      // fetchPhotos(input);
       navigate(`/photos/${input.replace(" ", "_")}`);
       setInput("");
     }
@@ -40,7 +38,7 @@ const SearchBar = (props) => {
   const fetchSuggestions = (typedText) => {
     axios
       .get(
-        "https://thingproxy.freeboard.io/fetch/https://unsplash.com/nautocomplete/" +
+        "https://api.allorigins.win/raw?url=https://unsplash.com/nautocomplete/" +
           typedText
       )
       .then((response) => {
