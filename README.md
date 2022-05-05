@@ -4,5 +4,5 @@
 
 Simple application using API from Unsplash.com. The application allows you to search and view photos. After pressing the photo, detailed information about it is displayed.
 
-## Technologies
+### Technologies
 React.js, SCSS, REST API
