@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
+
+import useFetchSuggestions from "../hooks/useFetchSuggestions";
 
 import "../assets/css/searchBar.css";
 
@@ -11,6 +12,8 @@ const SearchBar = () => {
   const [input, setInput] = useState("");
   const [autocomplete, setAutocomplete] = useState([]);
   const [displayResults, setDisplayResults] = useState(false);
+  const fetchedSuggestions = useFetchSuggestions(input);
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -35,28 +38,14 @@ const SearchBar = () => {
     setInput("");
   };
 
-  const fetchSuggestions = (typedText) => {
-    axios
-      .get(
-        "https://api.allorigins.win/raw?url=https://unsplash.com/nautocomplete/" +
-          typedText
-      )
-      .then((response) => {
-        setAutocomplete(response.data.autocomplete);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   useEffect(() => {
     if (input.trim(" ").length > 2) {
-      fetchSuggestions(input);
+      setAutocomplete(fetchedSuggestions);
       setDisplayResults(true);
     } else {
       setDisplayResults(false);
     }
-  }, [input]);
+  }, [input, autocomplete, fetchedSuggestions]);
 
   const hideSuggestions = (e) => {
     setDisplayResults(false);
@@ -70,7 +59,7 @@ const SearchBar = () => {
     >
       <div
         className={
-          location.pathname == "/" ? "searchBar" : "searchBar searchBarGray"
+          location.pathname === "/" ? "searchBar" : "searchBar searchBarGray"
         }
       >
         <button onClick={fetchPhotosHandler}>
@@ -90,7 +79,7 @@ const SearchBar = () => {
 
       {displayResults ? (
         <div className="searchResults">
-          {autocomplete.length > 0 ? (
+          {autocomplete ? (
             autocomplete.map((a) => {
               return (
                 <p

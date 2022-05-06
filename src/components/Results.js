@@ -13,24 +13,6 @@ const Results = () => {
   const [displayModal, setDisplayModal] = useState(false);
   const location = useLocation();
 
-  const getImageDetails = (id) => {
-    axios
-      .get("https://api.unsplash.com/photos/" + id, {
-        headers: {
-          Authorization:
-            "Client-ID U_AHavzNq1TllMAV6V5HXzEtZGk_eiK_bgE5ITcxum8",
-        },
-      })
-      .then((response) => {
-        setDisplayModal(true);
-        setImageInfo(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .then(() => {});
-  };
-
   const fetchPhotos = (text) => {
     axios
       .get("https://api.unsplash.com/search/photos", {
@@ -81,7 +63,7 @@ const Results = () => {
                 src={p.urls.small}
                 loading="lazy"
                 alt={p.alt_description}
-                onClick={() => getImageDetails(p.id)}
+                // onClick={() => getImageDetails(p.id)}
               ></img>
             );
           })}
