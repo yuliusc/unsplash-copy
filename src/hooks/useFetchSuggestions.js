@@ -1,8 +1,12 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 const useFetchSuggestions = (typedText) => {
-  const [fetchedSuggestions, setFetchedSuggestions] = useState(null);
+  // const [fetchedSuggestions, setFetchedSuggestions] = useState(null);
+
+  // const temp = useMemo(() => {
+  //   return typedText;
+  // }, [typedText]);
 
   axios
     .get(
@@ -10,13 +14,15 @@ const useFetchSuggestions = (typedText) => {
         typedText
     )
     .then((response) => {
-      setFetchedSuggestions(response.data.autocomplete);
+      // console.log(response.data.autocomplete);
+      return response.data.autocomplete;
+      // setFetchedSuggestions();
     })
     .catch((error) => {
       console.log(error);
     });
 
-  return fetchedSuggestions;
+  // return fetchedSuggestions;
 };
 
 export default useFetchSuggestions;

@@ -13,7 +13,7 @@ const SearchBar = () => {
   const [autocomplete, setAutocomplete] = useState([]);
   const [displayResults, setDisplayResults] = useState(false);
   const fetchedSuggestions = useFetchSuggestions(input);
-
+  console.log(fetchedSuggestions);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -39,13 +39,14 @@ const SearchBar = () => {
   };
 
   useEffect(() => {
+    console.log(fetchedSuggestions);
     if (input.trim(" ").length > 2) {
       setAutocomplete(fetchedSuggestions);
       setDisplayResults(true);
     } else {
       setDisplayResults(false);
     }
-  }, [input, autocomplete, fetchedSuggestions]);
+  }, [input, fetchedSuggestions, autocomplete]);
 
   const hideSuggestions = (e) => {
     setDisplayResults(false);
