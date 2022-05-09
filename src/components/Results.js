@@ -6,51 +6,37 @@ import SearchBar from "./SearchBar";
 import Modal from "./Modal";
 
 import "../assets/css/Results.css";
+import useFetchPhotos from "../hooks/useFetchPhotos";
 
 const Results = () => {
   const [images, setImages] = useState(null);
-  const [imageInfo, setImageInfo] = useState([]);
-  const [displayModal, setDisplayModal] = useState(false);
+  // const [imageInfo, setImageInfo] = useState([]);
+  // const [displayModal, setDisplayModal] = useState(false);
+
   const location = useLocation();
 
-  const fetchPhotos = (text) => {
-    axios
-      .get("https://api.unsplash.com/search/photos", {
-        params: {
-          query: { text },
-          per_page: 50,
-        },
-        headers: {
-          Authorization:
-            "Client-ID ETRMvKeQo3cuywlMYUeDTdRKB4ZOiBsWkh_Astw4UNQ",
-        },
-      })
-      .then((response) => {
-        setImages(response.data.results);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .then(() => {});
-  };
+  const textToFetch = location.pathname
+    .replace("/photos/", "")
+    .replace("_", " ");
+  const fetchedPhotos = useFetchPhotos(textToFetch);
 
   useEffect(() => {
-    fetchPhotos(location.pathname.replace("/photos/", "").replace("_", " "));
+    setImages(fetchedPhotos);
   }, [location.pathname]);
 
-  const closeModal = () => {
-    setDisplayModal(false);
-  };
+  // const closeModal = () => {
+  //   setDisplayModal(false);
+  // };
 
   return (
     <div className="resultsContainer">
-      {!!imageInfo && displayModal ? (
+      {/* {!!imageInfo && displayModal ? (
         <Modal
           imageInfo={imageInfo}
           displayModal={displayModal}
           closeModal={closeModal}
         ></Modal>
-      ) : null}
+      ) : null} */}
 
       <SearchBar className="searchBarGray"></SearchBar>
 
