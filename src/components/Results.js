@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
 
 import SearchBar from "./SearchBar";
 import Modal from "./Modal";
@@ -10,8 +9,8 @@ import useFetchPhotos from "../hooks/useFetchPhotos";
 
 const Results = () => {
   const [images, setImages] = useState(null);
-  // const [imageInfo, setImageInfo] = useState([]);
-  // const [displayModal, setDisplayModal] = useState(false);
+  const [chosenPhotoId, setChosenPhotoId] = useState([]);
+  const [displayModal, setDisplayModal] = useState(false);
 
   const location = useLocation();
 
@@ -22,21 +21,26 @@ const Results = () => {
 
   useEffect(() => {
     setImages(fetchedPhotos);
-  }, [location.pathname]);
+  }, [fetchedPhotos]);
 
-  // const closeModal = () => {
-  //   setDisplayModal(false);
-  // };
+  const closeModal = () => {
+    setDisplayModal(false);
+  };
+
+  const displayModalHandler = (id) => {
+    setChosenPhotoId(id);
+    setDisplayModal(true);
+  };
 
   return (
     <div className="resultsContainer">
-      {/* {!!imageInfo && displayModal ? (
+      {displayModal ? (
         <Modal
-          imageInfo={imageInfo}
           displayModal={displayModal}
           closeModal={closeModal}
+          chosenPhotoId={chosenPhotoId}
         ></Modal>
-      ) : null} */}
+      ) : null}
 
       <SearchBar className="searchBarGray"></SearchBar>
 
@@ -49,7 +53,7 @@ const Results = () => {
                 src={p.urls.small}
                 loading="lazy"
                 alt={p.alt_description}
-                // onClick={() => getImageDetails(p.id)}
+                onClick={() => displayModalHandler(p.id)}
               ></img>
             );
           })}

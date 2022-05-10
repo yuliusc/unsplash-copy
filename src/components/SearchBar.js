@@ -52,11 +52,7 @@ const SearchBar = () => {
   };
 
   return (
-    <form
-      className="search"
-      onSubmit={fetchPhotosHandler}
-      onBlur={hideSuggestions}
-    >
+    <form className="search" onBlur={hideSuggestions}>
       <div
         className={
           location.pathname === "/" ? "searchBar" : "searchBar searchBarGray"

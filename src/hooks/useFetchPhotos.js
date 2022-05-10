@@ -9,7 +9,7 @@ const useFetchPhotos = (text) => {
       .get("https://api.unsplash.com/search/photos", {
         params: {
           query: { text },
-          per_page: 50,
+          per_page: 30,
         },
         headers: {
           Authorization: "Client-ID " + process.env.REACT_APP_KEY,

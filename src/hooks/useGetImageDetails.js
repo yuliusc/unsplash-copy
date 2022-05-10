@@ -1,20 +1,25 @@
 import axios from "axios";
+import { useMemo, useState } from "react";
 
-require("dotenv").config();
+const useGetImageDetails = (id) => {
+  const [fetchedData, setFetchedData] = useState(null);
 
-const getImageDetails = (id) => {
-  axios
-    .get("https://api.unsplash.com/photos/" + id, {
-      headers: {
-        Authorization: process.env.Authorization,
-      },
-    })
-    .then((response) => {
-      // setDisplayModal(true);
-      // setImageInfo(response.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-    .then(() => {});
+  useMemo(() => {
+    axios
+      .get("https://api.unsplash.com/photos/" + id, {
+        headers: {
+          Authorization: "Client-ID " + process.env.REACT_APP_KEY,
+        },
+      })
+      .then((response) => {
+        setFetchedData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [id]);
+
+  return fetchedData;
 };
+
+export default useGetImageDetails;
