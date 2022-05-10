@@ -24,6 +24,7 @@ const SearchBar = () => {
   };
 
   const fetchPhotosHandler = (e) => {
+    e.preventDefault();
     if (input.trim(" ").length > 0) {
       navigate(`/photos/${input.replace(" ", "_")}`);
       setInput("");
