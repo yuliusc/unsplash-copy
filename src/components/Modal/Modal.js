@@ -1,14 +1,25 @@
 import ReactDOM from "react-dom";
 import { useEffect } from "react";
 
-import useGetImageDetails from "../hooks/useGetImageDetails";
+import useGetImageDetails from "../../hooks/useGetImageDetails";
 
-import "../assets/css/Modal.css";
+import {
+  Container,
+  ContainerTop,
+  ContainerBottom,
+  ContainerImg,
+  Author,
+  Time,
+  Place,
+  Icon,
+  Image,
+  Overlay,
+} from "./Modal.styles";
 
-import usersvg from "../assets/icons/user.svg";
-import locationsvg from "../assets/icons/location.svg";
-import closesvg from "../assets/icons/close.svg";
-import timesvg from "../assets/icons/time.svg";
+import usersvg from "../../assets/icons/user.svg";
+import locationsvg from "../../assets/icons/location.svg";
+import closesvg from "../../assets/icons/close.svg";
+import timesvg from "../../assets/icons/time.svg";
 
 const Modal = (props) => {
   const { displayModal, closeModal, chosenPhotoId } = props;
@@ -77,49 +88,45 @@ const ModalWithOverlay = (props) => {
   return (
     <>
       {imageInfo && (
-        <div className="modal">
-          <div className="top">
-            <div className="author">
-              <img src={usersvg} alt="User icon" className="icon user" />
+        <Container className="modal">
+          <ContainerTop className="top">
+            <Author className="author">
+              <Icon src={usersvg} alt="User icon" user />
               <p>{imageInfo.user.name}</p>
-            </div>
-            <img
+            </Author>
+            <Icon
               src={closesvg}
               alt="Close icon"
-              className="icon close"
               onClick={closeModalHandler}
+              close
             />
-          </div>
+          </ContainerTop>
 
-          <div className="mainImgContainer">
-            <img
+          <ContainerImg className="mainImgContainer">
+            <Image
               src={imageInfo.urls.regular}
               className="mainImg"
               alt={imageInfo.alt_description}
             />
-          </div>
-          <div className="bottom">
-            <div className="place">
+          </ContainerImg>
+          <ContainerBottom className="bottom">
+            <Place className="place">
               {imageInfo.location.name ? (
                 <>
-                  <img
-                    src={locationsvg}
-                    alt="Location icon"
-                    className="icon location"
-                  />
+                  <Icon src={locationsvg} alt="Location icon" location />
                   <p>{imageInfo.location.name}</p>
                 </>
               ) : null}
-            </div>
-            <div className="time">
-              <img src={timesvg} alt="Time icon" className="icon time" />
+            </Place>
+            <Time className="time">
+              <Icon src={timesvg} alt="Time icon" time />
               {<p>{transformedDate}</p>}
-            </div>
-          </div>
-        </div>
+            </Time>
+          </ContainerBottom>
+        </Container>
       )}
 
-      <div className="overlay" id="overlay"></div>
+      <Overlay id="overlay"></Overlay>
     </>
   );
 };

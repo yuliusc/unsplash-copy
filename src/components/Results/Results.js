@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-import SearchBar from "./SearchBar";
-import Modal from "./Modal";
+import SearchBar from "../SearchBar/SearchBar";
+import Modal from "../Modal/Modal";
 
-import "../assets/css/Results.css";
-import useFetchPhotos from "../hooks/useFetchPhotos";
+import { Container, Gallery, Img } from "./Results.styles";
+import useFetchPhotos from "../../hooks/useFetchPhotos";
 
 const Results = () => {
   const [images, setImages] = useState(null);
@@ -15,8 +15,8 @@ const Results = () => {
   const location = useLocation();
 
   const textToFetch = location.pathname
-    .replace("/photos/", "")
-    .replace("_", " ");
+    .replaceAll("/photos/", "")
+    .replaceAll("_", " ");
   const fetchedPhotos = useFetchPhotos(textToFetch);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const Results = () => {
   };
 
   return (
-    <div className="resultsContainer">
+    <Container>
       {displayModal ? (
         <Modal
           displayModal={displayModal}
@@ -42,24 +42,24 @@ const Results = () => {
         ></Modal>
       ) : null}
 
-      <SearchBar className="searchBarGray"></SearchBar>
+      <SearchBar></SearchBar>
 
       {images != null && (
-        <div className="gallery">
+        <Gallery>
           {images.map((p) => {
             return (
-              <img
+              <Img
                 key={p.id}
                 src={p.urls.small}
                 loading="lazy"
                 alt={p.alt_description}
                 onClick={() => displayModalHandler(p.id)}
-              ></img>
+              />
             );
           })}
-        </div>
+        </Gallery>
       )}
-    </div>
+    </Container>
   );
 };
 

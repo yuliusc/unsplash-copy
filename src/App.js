@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
 
-import Home from "./components/Home";
-import Results from "./components/Results";
+import Home from "./components/Home/Home";
+import Results from "./components/Results/Results";
 
 import "./App.css";
 

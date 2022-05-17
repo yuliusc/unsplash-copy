@@ -1,12 +1,21 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import useFetchSuggestions from "../hooks/useFetchSuggestions";
+import useFetchSuggestions from "../../hooks/useFetchSuggestions";
 
-import "../assets/css/searchBar.css";
+import {
+  Form,
+  FormSearch,
+  Button,
+  Img,
+  Input,
+  SearchResults,
+  SearchResult,
+  SearchError,
+} from "./SearchBar.styles";
 
-import serachsvg from "../assets/icons/search.svg";
-import closesvg from "../assets/icons/close.svg";
+import serachsvg from "../../assets/icons/search.svg";
+import closesvg from "../../assets/icons/close.svg";
 
 const SearchBar = () => {
   const [input, setInput] = useState("");
@@ -22,14 +31,14 @@ const SearchBar = () => {
   };
 
   const fetchPhotosHandlerSugg = (e) => {
-    navigate(`/photos/${e.target.textContent.replace(" ", "_")}`);
+    navigate(`/photos/${e.target.textContent.replaceAll(" ", "_")}`);
     setInput("");
   };
 
   const fetchPhotosHandler = (e) => {
     e.preventDefault();
     if (input.trim(" ").length > 0) {
-      navigate(`/photos/${input.replace(" ", "_")}`);
+      navigate(`/photos/${input.replaceAll(" ", "_")}`);
       setInput("");
     }
   };
@@ -53,47 +62,46 @@ const SearchBar = () => {
   };
 
   return (
-    <form className="search" onBlur={hideSuggestions}>
-      <div
-        className={
-          location.pathname === "/" ? "searchBar" : "searchBar searchBarGray"
-        }
-      >
-        <button onClick={fetchPhotosHandler}>
-          <img src={serachsvg} alt="Search icon" />
-        </button>
-        <input
+    <Form onBlur={hideSuggestions}>
+      <FormSearch path={location.pathname}>
+        <Button onClick={fetchPhotosHandler}>
+          <Img src={serachsvg} alt="Search icon" />
+        </Button>
+
+        <Input
           type="search"
           className="input"
           placeholder="Search free high-resolution photos"
           onChange={inputChanged}
           value={input}
+          path={location.pathname}
         />
-        <button onClick={clearHandler}>
-          <img src={closesvg} alt="Close icon" />
-        </button>
-      </div>
-
+        <Button onClick={clearHandler}>
+          <Img src={closesvg} alt="Close icon" />
+        </Button>
+      </FormSearch>
       {displayResults ? (
-        <div className="searchResults">
+        <SearchResults className="searchResults">
           {autocomplete ? (
             autocomplete.map((a) => {
               return (
-                <p
+                <SearchResult
                   key={a.query}
                   className="result"
                   onMouseDown={fetchPhotosHandlerSugg}
                 >
                   {a.query}
-                </p>
+                </SearchResult>
               );
             })
           ) : (
-            <p className="result error">No suggestion found</p>
+            <SearchError className="result error">
+              No suggestion found
+            </SearchError>
           )}
-        </div>
+        </SearchResults>
       ) : null}
-    </form>
+    </Form>
   );
 };
 
