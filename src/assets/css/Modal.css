@@ -7,7 +7,7 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 90vw;
+  max-width: 90vw;
   height: auto;
   z-index: 2;
   padding: 10px 20px;
@@ -15,15 +15,23 @@
           box-sizing: border-box;
   border-radius: 5px;
   font-size: clamp(0.7rem, 2vw, 1rem);
-  max-height: 90%;
-  height: auto;
+  max-height: 90vh;
 }
 
 .modal .mainImg {
   max-width: 80%;
+  max-height: 90vh;
   height: auto;
   margin: auto;
   overflow: auto;
+}
+
+.modal .mainImgContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: auto;
+  position: relative;
 }
 
 .modal .top {
