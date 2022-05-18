@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-import useFetchSuggestions from "../../hooks/useFetchSuggestions";
+import useSearchBar from "./useSearchBar";
 
 import {
   Form,
@@ -18,48 +17,18 @@ import serachsvg from "../../assets/icons/search.svg";
 import closesvg from "../../assets/icons/close.svg";
 
 const SearchBar = () => {
-  const [input, setInput] = useState("");
-  const [autocomplete, setAutocomplete] = useState([]);
-  const [displayResults, setDisplayResults] = useState(false);
-  const fetchedSuggestions = useFetchSuggestions(input);
-
   const location = useLocation();
-  const navigate = useNavigate();
 
-  const inputChanged = (e) => {
-    setInput(e.target.value);
-  };
-
-  const fetchPhotosHandlerSugg = (e) => {
-    navigate(`/photos/${e.target.textContent.replaceAll(" ", "_")}`);
-    setInput("");
-  };
-
-  const fetchPhotosHandler = (e) => {
-    e.preventDefault();
-    if (input.trim(" ").length > 0) {
-      navigate(`/photos/${input.replaceAll(" ", "_")}`);
-      setInput("");
-    }
-  };
-
-  const clearHandler = (e) => {
-    e.preventDefault();
-    setInput("");
-  };
-
-  useEffect(() => {
-    if (input.trim(" ").length > 2) {
-      setAutocomplete(fetchedSuggestions);
-      setDisplayResults(true);
-    } else {
-      setDisplayResults(false);
-    }
-  }, [input, fetchedSuggestions]);
-
-  const hideSuggestions = (e) => {
-    setDisplayResults(false);
-  };
+  const {
+    hideSuggestions,
+    fetchPhotosHandler,
+    inputChanged,
+    displayResults,
+    clearHandler,
+    autocomplete,
+    input,
+    fetchPhotosHandlerSugg,
+  } = useSearchBar();
 
   return (
     <Form onBlur={hideSuggestions}>

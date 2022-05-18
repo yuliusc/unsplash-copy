@@ -1,36 +1,18 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import useResults from "./useResults";
 
 import SearchBar from "../SearchBar/SearchBar";
 import Modal from "../Modal/Modal";
 
 import { Container, Gallery, Img } from "./Results.styles";
-import useFetchPhotos from "../../hooks/useFetchPhotos";
 
 const Results = () => {
-  const [images, setImages] = useState(null);
-  const [chosenPhotoId, setChosenPhotoId] = useState([]);
-  const [displayModal, setDisplayModal] = useState(false);
-
-  const location = useLocation();
-
-  const textToFetch = location.pathname
-    .replaceAll("/photos/", "")
-    .replaceAll("_", " ");
-  const fetchedPhotos = useFetchPhotos(textToFetch);
-
-  useEffect(() => {
-    setImages(fetchedPhotos);
-  }, [fetchedPhotos]);
-
-  const closeModal = () => {
-    setDisplayModal(false);
-  };
-
-  const displayModalHandler = (id) => {
-    setChosenPhotoId(id);
-    setDisplayModal(true);
-  };
+  const {
+    displayModal,
+    closeModal,
+    chosenPhotoId,
+    images,
+    displayModalHandler,
+  } = useResults();
 
   return (
     <Container>

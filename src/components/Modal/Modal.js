@@ -1,5 +1,6 @@
 import ReactDOM from "react-dom";
-import { useEffect } from "react";
+
+import useModal from "./useModal";
 
 import useGetImageDetails from "../../hooks/useGetImageDetails";
 
@@ -21,8 +22,7 @@ import locationsvg from "../../assets/icons/location.svg";
 import closesvg from "../../assets/icons/close.svg";
 import timesvg from "../../assets/icons/time.svg";
 
-const Modal = (props) => {
-  const { displayModal, closeModal, chosenPhotoId } = props;
+const Modal = ({ displayModal, closeModal, chosenPhotoId }) => {
   const imageInfo = useGetImageDetails(chosenPhotoId);
 
   return (
@@ -39,58 +39,19 @@ const Modal = (props) => {
   );
 };
 
-const ModalWithOverlay = (props) => {
-  const { displayModal, closeModal, imageInfo } = props;
-
-  useEffect(() => {
-    if (displayModal) {
-      document.getElementById("modal").style.zIndex = 3;
-      document.getElementById("overlay").style.zIndex = 1;
-      document.getElementsByTagName("body")[0].style.overflow = "hidden";
-    }
-  });
-
-  const closeModalHandler = () => {
-    document.getElementById("modal").style.zIndex = -2;
-    document.getElementById("overlay").style.zIndex = -2;
-    document.getElementsByTagName("body")[0].style.overflow = "auto";
-    closeModal();
-  };
-
-  const trnasformDate = () => {
-    var months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    if (imageInfo) {
-      let yearMonth = imageInfo.created_at
-        .toString()
-        .substr(0, 7)
-        .split("-")
-        .reverse();
-      let result = months[+yearMonth[0] - 1] + " " + yearMonth[1];
-      return result;
-    }
-  };
-
-  let transformedDate = trnasformDate();
+const ModalWithOverlay = ({ displayModal, closeModal, imageInfo }) => {
+  const { closeModalHandler, transformedDate } = useModal(
+    imageInfo,
+    displayModal,
+    closeModal
+  );
 
   return (
     <>
       {imageInfo && (
-        <Container className="modal">
-          <ContainerTop className="top">
-            <Author className="author">
+        <Container>
+          <ContainerTop>
+            <Author>
               <Icon src={usersvg} alt="User icon" user />
               <p>{imageInfo.user.name}</p>
             </Author>
@@ -102,15 +63,14 @@ const ModalWithOverlay = (props) => {
             />
           </ContainerTop>
 
-          <ContainerImg className="mainImgContainer">
+          <ContainerImg>
             <Image
               src={imageInfo.urls.regular}
-              className="mainImg"
               alt={imageInfo.alt_description}
             />
           </ContainerImg>
-          <ContainerBottom className="bottom">
-            <Place className="place">
+          <ContainerBottom>
+            <Place>
               {imageInfo.location.name ? (
                 <>
                   <Icon src={locationsvg} alt="Location icon" location />
@@ -118,7 +78,7 @@ const ModalWithOverlay = (props) => {
                 </>
               ) : null}
             </Place>
-            <Time className="time">
+            <Time>
               <Icon src={timesvg} alt="Time icon" time />
               {<p>{transformedDate}</p>}
             </Time>

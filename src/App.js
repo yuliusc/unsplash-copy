@@ -4,7 +4,7 @@ import { useLocation, useNavigate, Navigate } from "react-router-dom";
 import Home from "./components/Home/Home";
 import Results from "./components/Results/Results";
 
-import "./App.css";
+import AppContainer from "./App.styles";
 
 function App() {
   let location = useLocation();
@@ -16,6 +16,7 @@ function App() {
 
   return (
     <div className="App">
+      <AppContainer />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="photos/:searchResult" element={<Results />} />
